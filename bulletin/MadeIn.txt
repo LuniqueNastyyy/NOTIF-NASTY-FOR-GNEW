@@ -1,0 +1,49 @@
+A mettre dans OpenSource dans la base INVEK ou alors si votre es_extended et pas core
+
+(es_extended/client/function.lua)
+
+    
+function ESX.ShowNotification(msg, flash, saveToBrief, hudColorIndex, title, subject, icon)
+    if IsPauseMenuActive() then return end
+
+    if title == nil then title = "GTANEW" end
+    if subject == nil then subject = "INFORMATION" end
+    if icon == nil then icon = "message" end
+
+    exports.bulletin:Send(msg, nil, nil, true, nil, title, subject, icon)
+end
+
+
+function ESX.ShowAdvancedNotification(title, subject, msg, banner, timeout, icon)
+    if IsPauseMenuActive() then return end
+
+    if title == nil then title = "GTANEW" end
+    if subject == nil then subject = "INFORMATION" end
+    if icon == nil then icon = "message" end
+
+    exports.bulletin:SendAdvanced(msg, subject, title, banner, nil, nil, true, nil, icon)
+end
+
+function ESX.ShowHelpNotification(msg)
+    AddTextEntry('esxHelpNotification', msg)
+    BeginTextCommandDisplayHelp('esxHelpNotification')
+    EndTextCommandDisplayHelp(0, false, true, -1)
+end
+
+ESX.ShowFloatingHelpNotification = function(msg, coords)
+	AddTextEntry('esxFloatingHelpNotification', msg)
+	SetFloatingHelpTextWorldPosition(1, coords)
+	SetFloatingHelpTextStyle(1, 1, 2, -1, 3, 0)
+	BeginTextCommandDisplayHelp('esxFloatingHelpNotification')
+	EndTextCommandDisplayHelp(2, false, false, -1)
+end
+
+ESX.UI.ShowInventoryItemNotification = function(add, item, count)
+	SendNUIMessage({
+		action = 'inventoryNotification',
+		add    = add,
+		item   = item,
+		count  = count
+	})
+end
+
